@@ -80,7 +80,7 @@ Given the user's credentials, this endpoint will authenticate the user with the 
 | `username` <br/><span class="label label-danger">Required</span> | The user's username |
 | `password` <br/><span class="label label-danger">Required</span> | The user's password |
 | <dfn data-key="scope">`scope`</dfn> | Use `openid` to get an ID Token, `openid profile email` to get an ID Token and the user profile, or `openid offline_access` to get an ID Token and a <dfn data-key="refresh-token">Refresh Token</dfn>. |
-| `id_token` | Used to authenticate using a token instead of username/password, in [Touch ID](/libraries/lock-ios/touchid-authentication) scenarios. |
+| `id_token` | Used to authenticate using a token instead of username/password, in [Touch ID / Face ID](/libraries/lock-ios/touchid-authentication) scenarios. |
 | `device` | You should set this to a string, if you are requesting a Refresh Token (`scope=offline_access`). |
 
 ### Test with Authentication API Debugger

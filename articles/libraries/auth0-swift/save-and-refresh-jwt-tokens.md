@@ -23,7 +23,7 @@ First, import the `Auth0` module:
 import Auth0
 ```
 
-Next, present the Login:
+Next, present the Universal Login page:
 
 ```swift
 let credentialsManager = CredentialsManager(authentication: Auth0.authentication())
@@ -35,7 +35,7 @@ Auth0
     .start {
         switch $0 {
         case .failure(let error):
-            // Handle the error
+            // Handle error
         case .success(let credentials):
             // Pass the credentials over to the Credentials Manager
             credentialsManager.store(credentials: credentials)
@@ -43,7 +43,7 @@ Auth0
 }
 ```
 
-::: note
+::: warning
 The Keychain items do not get deleted after your app is uninstalled. We recommend to always clear all of your app's Keychain items on first launch.
 :::
 
@@ -53,7 +53,7 @@ It can be useful to perform a quick sanity check that you have valid credentials
 
 ```swift
 guard credentialsManager.hasValid() else {
-    // Present Login Page
+    // Present login screen
 }
 ```
 
@@ -64,7 +64,8 @@ You can retrieve the user's credentials as follows:
 ```swift
 credentialsManager.credentials { error, credentials in
     guard error == nil, let credentials = credentials else {
-        // Handle Error, Present Login Page
+        // Handle error
+        // Present login screen
     }
     // Valid credentials, you can access the token properties such as `idToken`, `accessToken`.
 }
@@ -90,12 +91,16 @@ Auth0
     .start {
         switch $0 {
         case .failure(let error):
-            // Handle the error
+            // Handle error
         case .success(let credentials):
-             guard let accessToken = credentials.accessToken, let refreshToken = credentials.refreshToken else { // Handle Error }
-             keychain.setString(accessToken, forKey: "access_token")
-             keychain.setString(refreshToken, forKey: "refresh_token")
-             // You might want to route to a user profile screen at this point
+            guard let accessToken = credentials.accessToken, 
+              let refreshToken = credentials.refreshToken else { 
+                // Handle error 
+                return
+            }
+            keychain.setString(accessToken, forKey: "access_token")
+            keychain.setString(refreshToken, forKey: "refresh_token")
+            // You might want to route to a user profile screen at this point
         }
 }
 ```
@@ -113,12 +118,19 @@ Auth0
     .start { result in
         switch(result) {
         case .success(let credentials):
-            // Store the new Access Token
+            // If you have Refresh Token Rotation enabled, you get a new Refresh Token
+            // Otherwise you only get a new Access Token
+            guard let accessToken = credentials.accessToken, 
+              let refreshToken = credentials.refreshToken else { 
+                // Handle error 
+                return
+            }
+            // Store the new tokens
             keychain.setString(accessToken, forKey: "access_token")
-            // You do not get a new refresh_token, you can still use the one you originally had
+            keychain.setString(refreshToken, forKey: "refresh_token")
         case .failure(let error):
             keychain.clearAll()
-            // Handle Error
+            // Handle error
         }
 }
 ```

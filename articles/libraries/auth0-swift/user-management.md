@@ -11,7 +11,7 @@ useCase: enable-mobile-auth
 ---
 # User Management with Auth0.Swift
 
-The Management API provides functionality that allows you to link and unlink separate user accounts from different providers, tying them to a single profile (See [User Account Linking](/users/concepts/overview-user-account-linking) for details). It also allows you to update user metadata.
+The Management API provides functionality that allows you to link and unlink separate user accounts from different providers, tying them to a single profile (see [User Account Linking](/users/concepts/overview-user-account-linking) for details). It also allows you to update user metadata.
 
 ## Link users
 
@@ -26,7 +26,7 @@ Auth0
    .start { result in
       switch result {
       case .success(let userInfo):
-        print("user: \(userInfo)")
+        print("User: \(userInfo)")
       case .failure(let error):
         print(error)
       }
@@ -45,7 +45,7 @@ Auth0
    .start { result in
       switch result {
       case .success(let userInfo):
-        print("user: \(userInfo)")
+        print("User: \(userInfo)")
       case .failure(let error):
         print(error)
       }
@@ -65,7 +65,7 @@ Auth0
     .start { result in
         switch result {
         case .success(let userInfo):
-            print("user: \(userInfo)")
+            print("User: \(userInfo)")
         case .failure(let error):
             print(error)
         }
@@ -83,7 +83,7 @@ Auth0
     .start { result in
         switch result {
         case .success(let userInfo):
-          print("user: \(userInfo)")
+          print("User: \(userInfo)")
         case .failure(let error):
           print(error)
         }
